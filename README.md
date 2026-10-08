@@ -13,3 +13,17 @@ To propose new rules, consider joining the [ESGEM-AMR Working Group](https://esg
 **[Full docs can be found here](https://amrrules.readthedocs.io/en/latest/)**
 
 [DOI: 10.5281/zenodo.12724317](https://doi.org/10.5281/zenodo.12724317)
+
+## Interactive browser version
+
+This fork adds a client-side web app, deployed to GitHub Pages at
+**https://cinnetcrash.github.io/AMRrules_Interactive/**. It runs the unmodified
+`amrrules` engine in the browser via [Pyodide](https://pyodide.org/): upload an
+AMRFinderPlus output file, choose an organism (or an organism file for multi-sample
+input), set the same options as the CLI, and view/download the interpreted genotype
+report and genome summary report. A second tab browses the rule files. Uploaded files
+never leave your machine. Browser output is checked against CLI output byte-for-byte
+in CI (`tests/web/test_parity.py`).
+
+Local preview: `make web && make serve-web`, then open http://localhost:8000/.
+

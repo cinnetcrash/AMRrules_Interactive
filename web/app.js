@@ -91,7 +91,7 @@
       return col;
     });
     const table = new Tabulator(container, Object.assign({
-      data: parsed.rows, columns, layout: "fitDataTable", height: "420px",
+      data: parsed.rows, columns, layout: "fitData", height: "420px",
       pagination: false, movableColumns: true, columnDefaults: { tooltip: true },
     }, opts || {}));
     container.addEventListener("click", (ev) => {
@@ -235,7 +235,7 @@
     const parsed = parseTSV(text);
     if (state.tables.rules) state.tables.rules.destroy();
     state.tables.rules = new Tabulator($("#table-rules"), {
-      data: parsed.rows, layout: "fitDataTable", height: "600px", movableColumns: true,
+      data: parsed.rows, layout: "fitData", height: "600px", movableColumns: true,
       columnDefaults: { tooltip: true, headerFilter: "input", minWidth: 80 },
       columns: parsed.columns.map((c) => {
         const col = { title: c, field: c };
@@ -271,6 +271,10 @@
   }
 
   // ---------- worker ----------
+  function readyText() {
+    return `Ready · amrrules ${state.version}`;
+  }
+
   function startWorker() {
     const worker = new Worker("worker.js");
     state.worker = worker;
@@ -281,17 +285,20 @@
         $("#run-status").textContent = msg.text + "…";
       } else if (msg.type === "ready") {
         state.ready = true;
-        setStatus(`Ready · amrrules ${msg.info.version}`, "ready");
+        state.version = msg.info.version;
+        setStatus(readyText(), "ready");
         $("#run-status").textContent = "";
         $("#run-btn").disabled = false;
       } else if (msg.type === "result") {
         $("#run-btn").disabled = false;
         $("#run-status").textContent = "";
+        setStatus(readyText(), "ready");
         renderResult(msg.result);
       } else if (msg.type === "error") {
         $("#run-btn").disabled = !state.ready;
         $("#run-status").textContent = "";
         if (!state.ready) setStatus("Failed to start Python runtime", "failed");
+        else setStatus(readyText(), "ready");
         state.lastResult = { ok: false, error: msg.message };
         showError(msg.message);
       }
