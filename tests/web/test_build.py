@@ -70,7 +70,8 @@ def _load_runner(tmp_path):
 
 
 def _resources(built):
-    return {name: (built / "resources" / name).read_text() for name in RESOURCE_NAMES}
+    # bytes->str without newline translation, exactly like the browser's fetch().text()
+    return {name: (built / "resources" / name).read_bytes().decode("utf-8") for name in RESOURCE_NAMES}
 
 
 def test_runner_glue_matches_cli(built, tmp_path):

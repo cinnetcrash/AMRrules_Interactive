@@ -47,7 +47,12 @@ def setup(resources):
     res_dir = Path(res_mod.__file__).parent / "resources"
     res_dir.mkdir(exist_ok=True)
     for name in RESOURCE_TEXT_FILES:
-        (res_dir / name).write_text(resources[name])
+        target = res_dir / name
+        data = resources[name].encode("utf-8")
+        # On CPython with an editable install this directory is the source tree:
+        # only write when the content actually differs, so tests never rewrite repo files.
+        if not target.exists() or target.read_bytes() != data:
+            target.write_bytes(data)
 
     card_map = json.loads(resources["card_drug_class_map.json"])
     res_mod.ResourceManager.get_card_drug_class_map = lambda self: card_map
