@@ -65,3 +65,5 @@ desktop.ini
 # Pre-commit hook metadata (if used)
 .pre-commit-config.yaml
 .pre-commit-hooks.yaml
+# generated browser assets
+web/build/

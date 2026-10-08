@@ -1,6 +1,6 @@
 # Makefile for AMRrules
 
-.PHONY: dev build clean
+.PHONY: dev build clean web serve-web
 
 # Copy rules and install in editable mode
 dev:
@@ -20,3 +20,10 @@ build:
 clean:
 	@echo "🧹 Cleaning build artifacts..."
 	rm -rf build dist *.egg-info
+# Build static assets for the browser UI (web/build/)
+web:
+	python scripts/build_web.py
+
+# Preview the browser UI locally
+serve-web:
+	python -m http.server -d web 8000
