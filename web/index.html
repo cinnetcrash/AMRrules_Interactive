@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>AMRrules Interactive</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.4.0/css/tabulator_simple.min.css">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<header>
+  <div class="header-row">
+    <h1>AMRrules Interactive</h1>
+    <div id="status" class="status loading" aria-live="polite">Starting…</div>
+  </div>
+  <p class="tagline">Organism-specific interpretation of AMRFinderPlus genotypes. Everything runs in your browser; your files are never uploaded.</p>
+  <nav class="tabs" role="tablist">
+    <button type="button" data-tab="interpret" class="active" role="tab">Interpret</button>
+    <button type="button" data-tab="rules" role="tab">Rules</button>
+  </nav>
+</header>
+
+<main>
+  <section id="tab-interpret" class="tab active">
+    <form id="run-form">
+      <fieldset>
+        <legend>1. Input: AMRFinderPlus output (TSV or TSV.gz)</legend>
+        <div class="row">
+          <input type="file" id="input-file" accept=".tsv,.txt,.gz,text/tab-separated-values,text/plain">
+          <label>or load an example
+            <select id="example-input"><option value="">—</option></select>
+          </label>
+        </div>
+        <div id="input-name" class="muted"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>2. Organism</legend>
+        <div class="row">
+          <label><input type="radio" name="mode" value="single" checked> Single organism</label>
+          <select id="organism"></select>
+        </div>
+        <div class="row">
+          <label><input type="radio" name="mode" value="multi"> Organism file (sample ID &nbsp;TAB&nbsp; organism, no header)</label>
+          <input type="file" id="organism-file" accept=".tsv,.txt">
+          <label>or example
+            <select id="example-orgfile"><option value="">—</option></select>
+          </label>
+        </div>
+        <div id="orgfile-name" class="muted"></div>
+      </fieldset>
+
+      <fieldset>
+        <legend>3. Options (same as the command line)</legend>
+        <div class="row">
+          <label>No-rule interpretation
+            <select id="opt-nr">
+              <option value="none">none</option>
+              <option value="nwt">nwt</option>
+              <option value="nwtR">nwtR</option>
+              <option value="nwtS">nwtS</option>
+            </select>
+          </label>
+          <label>Annotation
+            <select id="opt-annot">
+              <option value="minimal">minimal</option>
+              <option value="full">full</option>
+            </select>
+          </label>
+          <label>Output prefix <input type="text" id="opt-prefix" value="amrrules" size="12"></label>
+          <label>Sample ID (single-sample files) <input type="text" id="opt-sample-id" size="14"></label>
+        </div>
+        <div class="row">
+          <label><input type="checkbox" id="opt-flag-core"> Flag core genes</label>
+          <label><input type="checkbox" id="opt-full-disrupt"> Show full POINT_DISRUPT mutation</label>
+          <label><input type="checkbox" id="opt-non-amr"> Include non-AMR rows</label>
+        </div>
+      </fieldset>
+
+      <div class="row">
+        <button type="submit" id="run-btn" disabled>Run AMRrules</button>
+        <span id="run-status" class="muted"></span>
+      </div>
+    </form>
+
+    <div id="error" class="error hidden" role="alert"></div>
+
+    <section id="results" class="hidden">
+      <details>
+        <summary>Run log</summary>
+        <pre id="run-log"></pre>
+      </details>
+
+      <div class="result-block">
+        <h2>Genome summary report <button type="button" id="dl-summary">Download TSV</button></h2>
+        <div class="row matrix-controls">
+          <label>Category matrix by
+            <select id="matrix-level">
+              <option value="class">drug class</option>
+              <option value="drug">drug</option>
+            </select>
+          </label>
+          <span class="legend"><i class="cat-S"></i>S <i class="cat-I"></i>I <i class="cat-R"></i>R <i class="cat-none"></i>no category</span>
+        </div>
+        <div id="matrix" class="matrix-wrap"></div>
+        <div id="table-summary"></div>
+      </div>
+
+      <div class="result-block">
+        <h2>Interpreted genotype report <button type="button" id="dl-interpreted">Download TSV</button></h2>
+        <div id="table-interpreted"></div>
+      </div>
+    </section>
+  </section>
+
+  <section id="tab-rules" class="tab">
+    <div class="row">
+      <label>Organism <select id="rules-organism"></select></label>
+      <input type="search" id="rules-search" placeholder="Search all columns">
+      <button type="button" id="dl-rules">Download TSV</button>
+      <span id="rules-count" class="muted"></span>
+    </div>
+    <div id="table-rules"></div>
+  </section>
+</main>
+
+<footer>
+  <div id="versions"></div>
+  <div>
+    <a href="https://github.com/AMRverse/AMRrules">AMRrules (upstream)</a> ·
+    <a href="https://amrrules.readthedocs.io/">Documentation</a> ·
+    <a href="https://github.com/cinnetcrash/AMRrules_Interactive">Source of this site</a>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/6.4.0/js/tabulator.min.js"></script>
+<script src="app.js"></script>
+</body>
+</html>

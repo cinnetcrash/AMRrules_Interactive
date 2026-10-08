@@ -1,0 +1,52 @@
+:root {
+  --bg: #ffffff; --fg: #1b1f23; --muted: #5c6670; --border: #d0d7de; --accent: #0b5cad;
+  --panel: #f6f8fa; --error-bg: #fff1f0; --error-fg: #8a1c1c;
+  --cat-s: #2e8b57; --cat-i: #e0a100; --cat-r: #c62828; --cat-none: #c9ced3;
+}
+@media (prefers-color-scheme: dark) {
+  :root { --bg: #0f141a; --fg: #e6edf3; --muted: #9aa5b1; --border: #30363d; --accent: #58a6ff;
+          --panel: #161b22; --error-bg: #3a1414; --error-fg: #ffb4b4; --cat-none: #3a434d; }
+}
+* { box-sizing: border-box; }
+body { margin: 0; font: 15px/1.45 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif; color: var(--fg); background: var(--bg); }
+header, main, footer { max-width: 1400px; margin: 0 auto; padding: 0 16px; }
+header { padding-top: 16px; }
+.header-row { display: flex; align-items: center; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+h1 { margin: 0; font-size: 1.6rem; }
+h2 { font-size: 1.15rem; margin: 24px 0 8px; display: flex; align-items: center; gap: 12px; }
+.tagline { color: var(--muted); margin: 6px 0 12px; }
+.status { padding: 4px 10px; border-radius: 999px; font-size: 0.9rem; border: 1px solid var(--border); }
+.status.loading { background: var(--panel); }
+.status.ready { border-color: var(--cat-s); color: var(--cat-s); }
+.status.failed { border-color: var(--cat-r); color: var(--cat-r); }
+.tabs { display: flex; gap: 4px; border-bottom: 1px solid var(--border); }
+.tabs button { background: none; border: 1px solid transparent; border-bottom: none; padding: 8px 16px; cursor: pointer; color: var(--muted); font-size: 1rem; border-radius: 6px 6px 0 0; }
+.tabs button.active { color: var(--fg); border-color: var(--border); background: var(--bg); margin-bottom: -1px; }
+.tab { display: none; padding: 16px 0 32px; }
+.tab.active { display: block; }
+fieldset { border: 1px solid var(--border); border-radius: 6px; margin: 0 0 12px; padding: 10px 14px; background: var(--panel); }
+legend { font-weight: 600; padding: 0 6px; }
+.row { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 18px; margin: 6px 0; }
+label { display: inline-flex; align-items: center; gap: 6px; }
+select, input[type=text], input[type=search] { padding: 4px 6px; border: 1px solid var(--border); border-radius: 4px; background: var(--bg); color: var(--fg); }
+button { padding: 6px 14px; border: 1px solid var(--accent); border-radius: 4px; background: var(--accent); color: #fff; cursor: pointer; font-size: 0.95rem; }
+button:disabled { opacity: 0.5; cursor: not-allowed; }
+h2 button, #dl-rules { padding: 2px 10px; font-size: 0.85rem; }
+.muted { color: var(--muted); font-size: 0.9rem; }
+.hidden { display: none !important; }
+.error { background: var(--error-bg); color: var(--error-fg); border: 1px solid var(--error-fg); border-radius: 6px; padding: 10px 14px; white-space: pre-wrap; font-family: ui-monospace, monospace; font-size: 0.9rem; margin: 12px 0; }
+pre#run-log { background: var(--panel); border: 1px solid var(--border); border-radius: 6px; padding: 10px; overflow: auto; max-height: 300px; font-size: 0.85rem; }
+.result-block { margin-top: 12px; }
+.tabulator { font-size: 13px; border-radius: 6px; }
+.rule-link { color: var(--accent); cursor: pointer; text-decoration: underline; }
+.matrix-wrap { overflow: auto; max-height: 420px; border: 1px solid var(--border); border-radius: 6px; margin-bottom: 12px; }
+table.matrix { border-collapse: collapse; font-size: 12px; }
+table.matrix th, table.matrix td { border: 1px solid var(--border); padding: 2px 6px; white-space: nowrap; }
+table.matrix thead th { position: sticky; top: 0; background: var(--panel); writing-mode: vertical-rl; transform: rotate(180deg); max-height: 160px; vertical-align: bottom; }
+table.matrix tbody th { position: sticky; left: 0; background: var(--panel); text-align: left; }
+table.matrix td { text-align: center; width: 26px; color: #fff; font-weight: 600; }
+.cat-S { background: var(--cat-s); } .cat-I { background: var(--cat-i); } .cat-R { background: var(--cat-r); }
+.cat-none { background: var(--cat-none); color: var(--fg) !important; }
+.legend i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: middle; margin: 0 2px 0 8px; }
+footer { border-top: 1px solid var(--border); padding: 12px 16px 24px; color: var(--muted); font-size: 0.9rem; display: flex; justify-content: space-between; flex-wrap: wrap; gap: 8px; }
+footer a { color: var(--accent); }
