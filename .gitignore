@@ -67,3 +67,6 @@ desktop.ini
 .pre-commit-hooks.yaml
 # generated browser assets
 web/build/
+
+# local session logs and screenshots
+logs/
